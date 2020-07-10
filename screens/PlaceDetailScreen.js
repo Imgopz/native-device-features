@@ -11,7 +11,8 @@ const PlaceDetailScreen = props => {
 
 export const screenOptions = navData => {
   return{
-    headerTitle: 'Place Details'
+    // this is how we need to extract data
+    headerTitle: navData.route.params.placeTitle
   }  
 };
 

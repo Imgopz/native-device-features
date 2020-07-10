@@ -1,14 +1,39 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { View, Text, StyleSheet, Platform, FlatList } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector } from 'react-redux';
+
 
 import HeaderButton from '../components/HeaderButton'
+import PlaceItem from '../components/PlaceItem';
 
 const PlacesListScreen = props => {
+
+  // here in state.places.places,  the FIRST places is from the combined reducer which we have mentioned 
+  // in the app.js file, the SECOND places which mentioned inside the reducer.js file.
+  // we are using useSelect to get the state value which is from react-redux pkg
+  const places = useSelector(state => state.places.places);
+
   return (
-    <View>
-      <Text>PlacesListScreen</Text>
-    </View>
+    <FlatList
+      data={places}
+      keyExtractor={item => item.id}
+      renderItem={itemData => (
+        // Here we are passing parameter only to the component (KEEP IT IN MIND!!!)
+        <PlaceItem
+          image={null}
+          title={itemData.item.title}
+          address={null}
+          onSelect={() => {
+            props.navigation.navigate('PlaceDetail', {  //this is where we are navigating to place details screen
+              // and passing required parameters for header(IMPORTANT TO NOTE!!!)
+              placeTitle: itemData.item.title,
+              placeId: itemData.item.id
+            });
+          }}
+        />
+      )}
+    />
   );
 };
 
