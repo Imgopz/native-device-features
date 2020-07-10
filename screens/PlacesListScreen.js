@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, FlatList } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 import HeaderButton from '../components/HeaderButton'
 import PlaceItem from '../components/PlaceItem';
+import * as placesActions from '../store/places-actions';
+
 
 const PlacesListScreen = props => {
 
@@ -13,6 +15,12 @@ const PlacesListScreen = props => {
   // in the app.js file, the SECOND places which mentioned inside the reducer.js file.
   // we are using useSelect to get the state value which is from react-redux pkg
   const places = useSelector(state => state.places.places);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(placesActions.loadPlaces());
+  }, [dispatch]);
+
 
   return (
     <FlatList
