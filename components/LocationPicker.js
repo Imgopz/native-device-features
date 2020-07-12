@@ -5,6 +5,7 @@ import {
   Text,
   ActivityIndicator,
   Alert,
+  TouchableOpacity,
   StyleSheet
 } from 'react-native';
 import * as Location from 'expo-location';
@@ -80,17 +81,19 @@ const LocationPicker = props => {
 
   return (
     <View style={styles.locationPicker}>
-      <MapPreview
-        style={styles.mapPreview}
-        location={pickedLocation}
-        onPress={pickOnMapHandler}
-      >
-        {isFetching ? (
-          <ActivityIndicator size="large" color={Colors.primary} />
-        ) : (
-          <Text>No location chosen yet!</Text>
-        )}
-      </MapPreview>
+      <TouchableOpacity onPress={pickOnMapHandler}>
+        <MapPreview
+          style={styles.mapPreview}
+          location={pickedLocation}
+          //onPress={pickOnMapHandler}
+        >
+          {isFetching ? (
+            <ActivityIndicator size="large" color={Colors.primary} />
+          ) : (
+            <Text>No location chosen yet!</Text>
+          )}
+        </MapPreview>
+      </TouchableOpacity>
       <View style={styles.actions}>
         <Button
           title="Get User Location"

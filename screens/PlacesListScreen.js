@@ -30,9 +30,9 @@ const PlacesListScreen = props => {
       renderItem={itemData => (
         // Here we are passing parameter only to the component (KEEP IT IN MIND!!!)
         <PlaceItem
-          image={null}
+          image={itemData.item.imageUri}
           title={itemData.item.title}
-          address={null}
+          address={itemData.item.address}
           onSelect={() => {
             props.navigation.navigate('PlaceDetail', {  //this is where we are navigating to place details screen
               // and passing required parameters for header(IMPORTANT TO NOTE!!!)
