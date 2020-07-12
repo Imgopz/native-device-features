@@ -8,6 +8,7 @@ import HeaderButton from '../components/HeaderButton'
 import PlaceItem from '../components/PlaceItem';
 import * as placesActions from '../store/places-actions';
 
+// switch off aiduchu mapla wait
 
 const PlacesListScreen = props => {
 

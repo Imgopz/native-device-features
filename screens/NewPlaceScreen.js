@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   ScrollView,
   View,
@@ -15,12 +15,11 @@ import * as placesActions from '../store/places-actions';
 import ImagePicker from '../components/ImagePicker';
 import LocationPicker from '../components/LocationPicker';
 
-
-
 const NewPlaceScreen = props => {
 
   const [titleValue, setTitleValue] = useState('');
   const [selectedImage, setSelectedImage] = useState();
+  const [selectedLocation, setSelectedLocation] = useState();
 
   const dispatch = useDispatch();
 
@@ -31,8 +30,11 @@ const NewPlaceScreen = props => {
 
   const imageTakenHandler = imagePath => {
     setSelectedImage(imagePath);
-};
+  };
 
+  const locationPickedHandler = useCallback(location => {
+    setSelectedLocation(location);
+  }, []);
   // here we are using useDispatch as dispatch function which calls the addPlace action, which ultimately 
   // dispatch the addPlace action to (useDispatch will fire the action)
   // reducer via redux thunk which inturn execute the case which is mentioned
@@ -46,7 +48,9 @@ const NewPlaceScreen = props => {
   // then goBack to main screen, where we have used useSelector hooks, which will be triggered,
   // and all the places from the state will be taken from the store and places will be listed.
   const savePlaceHandler = () => {
-    dispatch(placesActions.addPlace(titleValue, selectedImage));
+    console.log("New Place Screen")
+    console.log(selectedLocation);
+    dispatch(placesActions.addPlace(titleValue, selectedImage, selectedLocation));
     props.navigation.goBack();
   };
 
@@ -60,7 +64,11 @@ const NewPlaceScreen = props => {
           value={titleValue}
         />
         <ImagePicker onImageTaken={imageTakenHandler} />
-        <LocationPicker navigation={props.navigation}  />
+        <LocationPicker 
+          onLocationPicked={locationPickedHandler} 
+          navigation={props.navigation} 
+          route={props.route} 
+        />
         <Button title="Save Place" color={Colors.primary} onPress={savePlaceHandler} />
       </View>
     </ScrollView>

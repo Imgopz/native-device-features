@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Button,
@@ -16,6 +16,33 @@ import MapPreview from './MapPreview';
 const LocationPicker = props => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState();
+
+  //const mapPickedLocation = props.navigation.getParam('pickedLocation');
+  const mapPickedLocation = props.route.params ? props.route.params.pickedLocation : {};
+
+  console.log("From LocationPicker.js: MAP PICKED")
+  console.log(mapPickedLocation);
+  console.log("From LocationPicker.js: PICKED")
+  console.log(pickedLocation)
+
+  const { onLocationPicked } = props;
+
+  props.onLocationPicked({
+    mapPickedLocation
+  });
+  
+  const onLocationPickecNew = useCallback(async() =>{
+    await setPickedLocation(mapPickedLocation);
+    await onLocationPicked(mapPickedLocation);
+  }, [mapPickedLocation, onLocationPicked])
+  
+  useEffect(() => {
+    // console.log("mapPickedLocation - ", mapPickedLocation);
+    if (mapPickedLocation) {
+      onLocationPickecNew()
+    }
+    console.log("useEffect")
+  }, []);
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -45,6 +72,8 @@ const LocationPicker = props => {
         lat: location.coords.latitude,
         lng: location.coords.longitude
       });
+
+      console.log("Inside Main -", mapPickedLocation);
     } catch (err) {
       Alert.alert(
         'Could not fetch location!',
