@@ -26,12 +26,7 @@ const MapScreen = props => {
     });
   };
 
-  console.log("From MapScreen.js")
-  console.log(selectedLocation);
-
   const savePickedLocationHandler = useCallback(() => {
-    console.log("Inside Function")
-    console.log(selectedLocation)
     if (!selectedLocation) {
       Alert.alert(
         'Choose Location!',
@@ -40,7 +35,7 @@ const MapScreen = props => {
       );
       return;
     }
-    props.navigation.navigate('NewPlace', { pickedLocation: selectedLocation });
+    props.navigation.navigate('NewPlace', { pickedLocationMap: selectedLocation });
   }, [selectedLocation]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -33,8 +33,21 @@ const NewPlaceScreen = props => {
   };
 
   const locationPickedHandler = useCallback(location => {
+    console.log("location picker function - newplace screen")
     setSelectedLocation(location);
   }, []);
+
+  const location = props.route.params ? props.route.params.pickedLocationMap : {};
+  // console.log("New Place Screen : ",location)
+  useEffect(() => {
+    setSelectedLocation({
+      lat: location.lat,
+      lng: location.lng
+    })
+  }, [props.route.params]);
+  
+
+  console.log("New Place Screen selecteLocation : ",selectedLocation)
   // here we are using useDispatch as dispatch function which calls the addPlace action, which ultimately 
   // dispatch the addPlace action to (useDispatch will fire the action)
   // reducer via redux thunk which inturn execute the case which is mentioned

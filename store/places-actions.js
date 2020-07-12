@@ -5,7 +5,7 @@ import ENV from '../env';
 export const ADD_PLACE = 'ADD_PLACE';
 export const SET_PLACES = 'SET_PLACES';
 
-export const addPlace = (title, image) => {
+export const addPlace = (title, image, location) => {
   return async dispatch => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
@@ -19,10 +19,12 @@ export const addPlace = (title, image) => {
 
     const resData = await response.json();
     if (!resData.results) {
-      throw new Error('Something went wrong!');
+      throw new Error('Something went wrong!');   
     }
 
-    const address = resData ? resData.results[0].formatted_address : 'Dummy Address';
+    //console.log(resData)
+    const address = 'Dummy Address'
+    //const address = resData ? resData.results[0].formatted_address : 'Dummy Address';
 
     // we can validate if user takes picture or not here
     const fileName = image.split('/').pop();
