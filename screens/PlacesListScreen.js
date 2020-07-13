@@ -18,6 +18,7 @@ const PlacesListScreen = props => {
   const places = useSelector(state => state.places.places);
   const dispatch = useDispatch();
 
+  // https://www.digitalocean.com/community/tutorials/getting-started-with-react-hooks#conclusion
   useEffect(() => {
     dispatch(placesActions.loadPlaces());
   }, [dispatch]);

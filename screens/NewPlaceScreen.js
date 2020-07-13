@@ -32,11 +32,14 @@ const NewPlaceScreen = props => {
     setSelectedImage(imagePath);
   };
 
+  // this function is used to set the current location when user "Get current location"
   const locationPickedHandler = useCallback(location => {
-    console.log("location picker function - newplace screen")
+    //console.log("location picker function - newplace screen")
     setSelectedLocation(location);
   }, []);
 
+  // below is chaning, because we are passing map picked location via nav parameters back to the screen
+  // which should be ultimately loded to database
   const location = props.route.params ? props.route.params.pickedLocationMap : {};
   // console.log("New Place Screen : ",location)
   useEffect(() => {
@@ -47,7 +50,7 @@ const NewPlaceScreen = props => {
   }, [props.route.params]);
   
 
-  console.log("New Place Screen selecteLocation : ",selectedLocation)
+  // console.log("New Place Screen selecteLocation : ",selectedLocation)
   // here we are using useDispatch as dispatch function which calls the addPlace action, which ultimately 
   // dispatch the addPlace action to (useDispatch will fire the action)
   // reducer via redux thunk which inturn execute the case which is mentioned
@@ -65,7 +68,7 @@ const NewPlaceScreen = props => {
     console.log(selectedLocation);
     dispatch(placesActions.addPlace(titleValue, selectedImage, selectedLocation));
     props.navigation.goBack();
-  };
+  }; // it should be called whenever required
 
   return (
     <ScrollView>
